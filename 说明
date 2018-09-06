@@ -1,0 +1,78 @@
+11-29 19:38:49.005 10021-10054/com.simoncherry.arcamera I/CameraTrackRenderer: start time: 1511955529003
+11-29 19:38:49.075 10021-10054/com.simoncherry.arcamera I/CameraTrackRenderer: start time: 1511955529073
+11-29 19:38:49.144 10021-10054/com.simoncherry.arcamera I/CameraTrackRenderer: start time: 1511955529143
+11-29 19:38:49.212 10021-10054/com.simoncherry.arcamera I/CameraTrackRenderer: start time: 1511955529211
+11-29 19:38:49.288 10021-10054/com.simoncherry.arcamera I/CameraTrackRenderer: start time: 1511955529286
+11-29 19:38:49.355 10021-10054/com.simoncherry.arcamera I/CameraTrackRenderer: start time: 1511955529353
+11-29 19:38:49.424 10021-10054/com.simoncherry.arcamera I/CameraTrackRenderer: start time: 1511955529422
+11-29 19:38:49.496 10021-10054/com.simoncherry.arcamera I/CameraTrackRenderer: start time: 1511955529494
+11-29 19:38:49.563 10021-10054/com.simoncherry.arcamera I/CameraTrackRenderer: start time: 1511955529561
+11-29 19:38:49.631 10021-10054/com.simoncherry.arcamera I/CameraTrackRenderer: start time: 1511955529630
+11-29 19:38:49.707 10021-10054/com.simoncherry.arcamera I/CameraTrackRenderer: start time: 1511955529705
+11-29 19:38:49.780 10021-10054/com.simoncherry.arcamera I/CameraTrackRenderer: start time: 1511955529778
+11-29 19:38:49.848 10021-10054/com.simoncherry.arcamera I/CameraTrackRenderer: start time: 1511955529846
+11-29 19:38:49.915 10021-10054/com.simoncherry.arcamera I/CameraTrackRenderer: start time: 1511955529913
+11-29 19:38:49.983 10021-10054/com.simoncherry.arcamera I/CameraTrackRenderer: start time: 1511955529981
+
+public static native void rgbaToYuv(byte[] rgba, int width, int height,byte[] yuv,int type);
+
+public static native int [] startCurrentORBForCamera(long addr,int Type, int w,int h,float []Fpoints,int FPointLength,float pi,float ro,float ya);
+
+public static native int [] SnapPic();
+
+public static native int GetWidth();
+
+public static native int GetHeight();
+
+public static native void InitAllData(AssetManager assetManager, String pathToInternalDir);
+public static native void Uninit();
+
+public static native void glesInit();
+public static native void glesRender();
+
+public static native void setEnvParam(float[] envParam);
+
+
+
+//initViewRunnable-->回调7帧
+
+
+DynamicModelActivity
+        |
+        |
+        V
+
+    onCreate()
+        |
+        |
+        V
+initViewRunnable()
+        |
+        |
+        V
+setTrackCallBackListener()
+        |
+        |//返回：faceActions[]、byte[] image、int orientation、
+        |       value、pitch、roll、yaw、eye_dist、id、eyeBlink、
+        |       mouthAh、headYaw、headPitch、browJump、
+        V
+handleDrawLandMark()
+        |            put into        cvColor
+        |//Mat image----------> mYuv--------->mRgba----->addr---->startCurrentORBForCamera()
+        |
+        |Origin(原图)-->OImg(转置后的原图)-->part(FaceDetect得到的抠图)-->rImg(drawGL获取的抠图)
+        |-->rImg1（rImg复制的图并释放part）
+        |
+        |plan(-1:不运行)-->plan(0:setBitmap)-->plan(1-动态改为2->:)--->plan(2:Timer setBitmap)
+        |
+        |
+        |
+        |
+        V
+
+
+
+
+
+
+
